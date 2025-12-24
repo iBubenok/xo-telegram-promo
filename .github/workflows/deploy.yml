@@ -25,6 +25,7 @@ jobs:
               git clone git@github.com:${{ github.repository }}.git "${APP_DIR}"
             fi
             cd "${APP_DIR}"
+            git config --global --add safe.directory "${APP_DIR}"
             git fetch --all
             git checkout main
             git pull
