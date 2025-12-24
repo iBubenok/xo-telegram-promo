@@ -4,6 +4,10 @@ import { AI_MARK, PLAYER_MARK, type Cell, type PlayerMark } from './types';
 const WIN_SCORE = 10;
 const LOSS_SCORE = -10;
 
+export type AiDifficulty = 'уверенный' | 'легкий';
+
+const getRandomElement = <T>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
+
 export function chooseAiMove(
   board: Cell[],
   aiMark: PlayerMark = AI_MARK,
@@ -30,6 +34,20 @@ export function chooseAiMove(
   }
 
   return bestMove;
+}
+
+export function chooseAiMoveWithDifficulty(
+  board: Cell[],
+  difficulty: AiDifficulty,
+  aiMark: PlayerMark = AI_MARK,
+  playerMark: PlayerMark = PLAYER_MARK
+): number | null {
+  if (difficulty === 'легкий') {
+    const available = getAvailableMoves(board);
+    return available.length ? getRandomElement(available) : null;
+  }
+
+  return chooseAiMove(board, aiMark, playerMark);
 }
 
 function minimax(

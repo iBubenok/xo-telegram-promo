@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { chooseAiMove } from './game/ai';
+import { chooseAiMoveWithDifficulty, type AiDifficulty } from './game/ai';
 import { createEmptyBoard, getGameStatus } from './game/logic';
 import { AI_MARK, PLAYER_MARK, type Cell, type GameStatus } from './game/types';
 import { sendGameResult } from './services/api';
@@ -27,6 +27,7 @@ function App() {
   const [roundId, setRoundId] = useState(1);
   const searchParams = useSearchParams();
   const chatId = searchParams.get('chatId') ?? undefined;
+  const [difficulty, setDifficulty] = useState<AiDifficulty>('уверенный');
 
   const finishGame = useCallback(async (finalStatus: GameStatus) => {
     const currentRound = roundId;
@@ -104,16 +105,16 @@ function App() {
     }
 
     const timer = setTimeout(() => {
-      const move = chooseAiMove(board);
+      const move = chooseAiMoveWithDifficulty(board, difficulty);
       const updatedBoard = [...board];
       if (move !== null) {
         updatedBoard[move] = AI_MARK;
       }
       handleBoardAfterMove(updatedBoard, 'ai');
-    }, 380);
+    }, difficulty === 'легкий' ? 280 : 380);
 
     return () => clearTimeout(timer);
-  }, [board, handleBoardAfterMove, isAiTurn, status]);
+  }, [board, difficulty, handleBoardAfterMove, isAiTurn, status]);
 
   const handleCellClick = (index: number) => {
     if (status !== 'playing' || isAiTurn || board[index]) {
@@ -160,18 +161,45 @@ function App() {
           </p>
         </div>
 
-      <div className={styles.layout}>
-        <section className={styles.boardCard}>
-          <header className={styles.cardHeader}>
-            <div>
-              <p className={styles.label}>Текущая партия</p>
-              <h2>{highlight}</h2>
-              <p className={styles.message}>{message}</p>
-            </div>
-            <span className={styles.turnBadge}>
-              {status === 'playing' ? (isAiTurn ? 'Ход компьютера' : 'Ваш ход') : 'Игра завершена'}
-            </span>
-          </header>
+        <div className={styles.layout}>
+          <section className={styles.boardCard}>
+            <header className={styles.cardHeader}>
+              <div>
+                <p className={styles.label}>Текущая партия</p>
+                <h2>{highlight}</h2>
+                <p className={styles.message}>{message}</p>
+                <div className={styles.difficulty}>
+                  <span className={styles.label}>Сложность</span>
+                  <div className={styles.segment}>
+                    <button
+                      type="button"
+                      className={`${styles.segmentBtn} ${difficulty === 'легкий' ? styles.active : ''}`}
+                      onClick={() => {
+                        setDifficulty('легкий');
+                        handleRestart();
+                      }}
+                      disabled={difficulty === 'легкий'}
+                    >
+                      Лёгкая
+                    </button>
+                    <button
+                      type="button"
+                      className={`${styles.segmentBtn} ${difficulty === 'уверенный' ? styles.active : ''}`}
+                      onClick={() => {
+                        setDifficulty('уверенный');
+                        handleRestart();
+                      }}
+                      disabled={difficulty === 'уверенный'}
+                    >
+                      Уверенная
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <span className={styles.turnBadge}>
+                {status === 'playing' ? (isAiTurn ? 'Ход компьютера' : 'Ваш ход') : 'Игра завершена'}
+              </span>
+            </header>
 
           <div className={styles.board}>
             {board.map((cell, index) => (

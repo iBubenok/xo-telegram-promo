@@ -1,4 +1,4 @@
-import { chooseAiMove } from './ai';
+import { chooseAiMove, chooseAiMoveWithDifficulty } from './ai';
 import { AI_MARK, PLAYER_MARK, type Cell } from './types';
 
 describe('ИИ (minimax)', () => {
@@ -28,5 +28,13 @@ describe('ИИ (minimax)', () => {
     ];
     const move = chooseAiMove(board);
     expect(move).toBeNull();
+  });
+
+  it('на легком уровне выбирает доступный ход', () => {
+    const board: Cell[] = [PLAYER_MARK, null, null, null, null, null, null, null, null];
+    const move = chooseAiMoveWithDifficulty(board, 'легкий');
+    expect(move).not.toBeNull();
+    expect(move).toBeGreaterThanOrEqual(0);
+    expect(move).toBeLessThan(9);
   });
 });
