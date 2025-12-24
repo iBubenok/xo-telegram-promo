@@ -28,10 +28,10 @@ export function startBotHelper(config: TelegramConfig) {
 
       const data = (await updates.json()) as {
         ok: boolean;
-        result?: Array<{
+        result?: {
           update_id: number;
           message?: { chat: { id: number; username?: string; first_name?: string }; text?: string };
-        }>;
+        }[];
       };
 
       if (!data.ok || !data.result) {
