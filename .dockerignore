@@ -1,0 +1,10 @@
+node_modules
+packages/*/node_modules
+packages/*/dist
+dist
+.git
+.gitignore
+.env
+.env.local
+npm-debug.log*
+coverage
