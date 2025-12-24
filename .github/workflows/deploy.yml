@@ -19,6 +19,8 @@ jobs:
           script: |
             set -e
             APP_DIR="${{ secrets.APP_DIR }}"
+            mkdir -p ~/.ssh
+            ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
             if [ ! -d "${APP_DIR}/.git" ]; then
               mkdir -p "${APP_DIR}"
               rm -rf "${APP_DIR}"
