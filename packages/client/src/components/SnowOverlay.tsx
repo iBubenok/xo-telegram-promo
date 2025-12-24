@@ -1,19 +1,19 @@
 import styles from './SnowOverlay.module.css';
 
-const FLAKES = 22;
+const ORBS = 16;
 
 export function SnowOverlay() {
   return (
     <div className={styles.overlay} aria-hidden>
-      {Array.from({ length: FLAKES }).map((_, index) => {
-        const size = 6 + (index % 4);
-        const duration = 12 + (index % 8);
-        const delay = (index * 0.7) % 6;
-        const left = (index * 97) % 100;
+      {Array.from({ length: ORBS }).map((_, index) => {
+        const size = 18 + (index % 5) * 6;
+        const duration = 14 + (index % 7);
+        const delay = (index * 0.8) % 7;
+        const left = (index * 61) % 100;
         return (
           <span
-            key={index}
-            className={styles.flake}
+            key={`orb-${index}`}
+            className={styles.orb}
             style={{
               width: `${size}px`,
               height: `${size}px`,

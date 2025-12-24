@@ -6,37 +6,33 @@
   z-index: 0;
 }
 
-.flake {
+.orb {
   position: absolute;
   top: -10px;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0.6),
-    rgba(241, 119, 154, 0.35)
-  );
+  background: radial-gradient(circle at 30% 30%, #ffe2f0, #f1779a, #7d8bff);
   border-radius: 50%;
-  opacity: 0.9;
-  animation-name: fall;
+  opacity: 0.75;
+  animation-name: float;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  filter: drop-shadow(0 0 6px rgba(100, 72, 128, 0.3));
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  filter: blur(0.4px) drop-shadow(0 0 10px rgba(122, 93, 192, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  mix-blend-mode: screen;
 }
 
-@keyframes fall {
+@keyframes float {
   0% {
-    transform: translate3d(0, -20px, 0) rotate(0deg);
-    opacity: 0;
+    transform: translate3d(-8px, -20px, 0) rotate(0deg);
+    opacity: 0.2;
   }
   10% {
-    opacity: 0.9;
+    opacity: 0.85;
   }
   50% {
-    transform: translate3d(-10px, 50vh, 0) rotate(180deg);
+    transform: translate3d(12px, 55vh, 0) rotate(180deg);
   }
   100% {
-    transform: translate3d(10px, 110vh, 0) rotate(360deg);
-    opacity: 0;
+    transform: translate3d(-18px, 110vh, 0) rotate(360deg);
+    opacity: 0.15;
   }
 }
