@@ -19,8 +19,9 @@ jobs:
           script: |
             set -e
             APP_DIR="${{ secrets.APP_DIR }}"
-            if [ ! -d "${APP_DIR}" ]; then
+            if [ ! -d "${APP_DIR}/.git" ]; then
               mkdir -p "${APP_DIR}"
+              rm -rf "${APP_DIR}"
               git clone git@github.com:${{ github.repository }}.git "${APP_DIR}"
             fi
             cd "${APP_DIR}"
