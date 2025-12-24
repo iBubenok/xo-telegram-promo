@@ -27,6 +27,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero {
@@ -36,6 +38,8 @@
   padding: 24px 28px;
   box-shadow: var(--shadow);
   animation: floatIn 0.5s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .badge {

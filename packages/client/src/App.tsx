@@ -6,6 +6,7 @@ import { sendGameResult } from './services/api';
 import { generateFallbackPromo } from './services/promo';
 import { useSearchParams } from './hooks/useSearchParams';
 import styles from './App.module.css';
+import { SnowOverlay } from './components/SnowOverlay';
 
 type Actor = 'player' | 'ai';
 
@@ -147,11 +148,12 @@ function App() {
 
   return (
     <div className={styles.app}>
-        <div className={styles.hero}>
-          <div className={styles.badge}>Мягкий режим</div>
-          <h1>Крестики-нолики с бонусом</h1>
-          <p>
-            Сыграйте быстрый матч против внимательного компьютера. Победа приносит промокод на скидку и
+      <SnowOverlay />
+      <div className={styles.hero}>
+        <div className={styles.badge}>Мягкий режим</div>
+        <h1>Крестики-нолики с бонусом</h1>
+        <p>
+          Сыграйте быстрый матч против внимательного компьютера. Победа приносит промокод на скидку и
             сообщение в Telegram.
           </p>
           <p className={styles.subtle}>
